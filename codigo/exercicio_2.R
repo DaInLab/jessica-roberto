@@ -44,3 +44,33 @@ categorizada <- cut(df.ex2$casas, breaks = c(1,25,50,75,100),
 
 table(categorizada)
 
+## Medidas de Posição e Medidas de Dispersão ##
+
+##Média##
+mean(df.ex2$casas)
+
+##Mediana##
+median(df.ex2$casas)
+
+##Variância e Desvio Padrão##
+
+sd(df.ex2$casas)
+
+#Desvio Padrao#
+var(df.ex2$casas)
+
+#Variancia#
+(sd(df.ex2$casas))^2
+
+###Coeficiente de Variação###
+cv = (sd(df.ex2$casas)*100)/mean(df.ex2$casas) 
+cv
+
+##### Graficos ###
+#Opção 1:#
+tabela <- table(df.ex2$casas)
+barplot(tabela,col="powderblue")
+
+#Opção 2:#
+library(exatas)
+plot(df.ex2$casas~df.ex2$casas)
