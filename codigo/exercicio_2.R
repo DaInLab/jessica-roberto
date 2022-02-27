@@ -1,3 +1,5 @@
+##EXERCICIO 2##
+
 ## Carregando pacotes ##
 
 if(!require(dplyr))
