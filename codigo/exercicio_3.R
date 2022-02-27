@@ -32,7 +32,8 @@ df.ex3
 View(df.ex3)
 
 #Exportando em formato xls#
-write.table(df.ex3, file = "exercicio3.xls")
+write.table(df.ex3, file = "exercicio3.csv", row.names = FALSE,
+            sep = ";", dec = ",")
 
 View(df.ex3)
 
