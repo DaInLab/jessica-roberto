@@ -1,21 +1,5 @@
 ## Exercicio 3 ##
 
-## Carregando pacotes ##
-
-if(!require(dplyr))
-  install.packages("dplyr")
-library(dplyr)
-
-if(!require(psych))
-  install.packages("psych")
-library(psych)
-
-# Instalando biblioteca readxl para importar para o R arquivos com extensão .xls ou .xlsx.
-if (!("readxl") %in% installed.packages()) install.packages("readxl")
-
-# Carregando a biblioteca
-library(readxl)
-
 # Criando Tabela #
 
 #criar variaveis#

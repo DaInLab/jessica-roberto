@@ -16,7 +16,7 @@ if (!("readxl") %in% installed.packages()) install.packages("readxl")
 # Carregando a biblioteca
 library(readxl)
 
-# Importando o arquivo do exercício 1
+# Importando o arquivo do exercício 2
 df.ex2 <- read_excel("./dados/exercicio2.xls",skip = 1, col_names = "casas", col_types = c("numeric"))
 
 ## Visualizando os dados ##
