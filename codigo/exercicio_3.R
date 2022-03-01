@@ -33,5 +33,19 @@ print(result)
 
 print(paste("Moda do Número de filhos:", result))
 
+#Graficos#
 
+#Mediana#
+ggplot(data = df.ex3) +
+  geom_col(aes(x = Numero_de_filhos, y = Familias)) +
+  geom_line(aes(y = Familias, x = ex3.mediana), colour="green")+
+  ggtitle(paste("Mediana: ", ex3.mediana, " filhos por familia")) +
+  theme(plot.title = element_text(hjust = 0.5))
+
+#Moda#
+ggplot(data = df.ex3) +
+  geom_col(aes(x = Numero_de_filhos, y = Familias)) +
+  geom_line(aes(y = Familias, x = ex3.moda), colour="orange")+
+  ggtitle(paste("Moda: ", ex3.moda, " filhos por familia")) +
+  theme(plot.title = element_text(hjust = 0.5))
 

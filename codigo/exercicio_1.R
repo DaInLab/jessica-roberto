@@ -1,99 +1,82 @@
-# Instalando biblioteca readxl para importar para o R arquivos com extensão .xls ou .xlsx.
-if (!("readxl") %in% installed.packages()) install.packages("readxl")
+##Instalando pacotes##
+install.packages("tidyverse")
 
-# Carregando a biblioteca
+library("tidyverse")
 library(readxl)
 
-# Importando o arquivo do exercício 1
-df.ex1 <- read_excel("./dados/exercicio1.xls",skip = 1, col_names = "tx.juros", col_types = c("numeric"))
+#Importando dados#
+df.ex1 <- read_excel("dados/exercicio1.xls")
 
-# calculando a media
-ex1.media <- mean(df.ex1$tx.juros)
-print(paste("Média das taxas de juros:", ex1.media))
+df.ex1 <- df.ex1 %>% rename(juros = "Taxas de juros")
 
-# calculando a mediana
-ex1.mediana = median(df.ex1$tx.juros)
-print(paste("Médiana das taxas de juros:", ex1.mediana))
+#Calculos#
+calculos <- summarise(df.ex1,
+                      media=mean(juros),
+                      mediana=median(juros),
+                      variancia= var(juros),
+                      desv_pad=sd(juros),
+                      minimo=min(juros),
+                      maximo=max(juros),
+                      q1=quantile(juros, type=5, 0.25),
+                      q3=quantile(juros, type=5, 0.75))
 
-# calculando o desvio padrão
-ex1_desviop = round(sd(df.ex1$tx.juros),6)
-print(paste("Desvio Padrão das taxas de juros:", ex1_desviop))
+df.ex1 %>% ggplot( geom_bar(aes(x=juros)))
 
-# calculando a variância
-ex1_varianca <- round(var(df.ex1$tx.juros),6)
-print(paste("Variância das taxas de juros:", ex1_varianca))
+df.ex1 <- df.ex1  %>% mutate(df.ex1,
+                             observacoes = c(1:10))
 
-# valor mínimo
-ex1.minimo <- min(df.ex1$tx.juros)
-print(paste("Valor mínimo das taxas de juros:", ex1.minimo))
+#Grafico media#
+ggplot(data = df.ex1) +
+  geom_col(aes(y = juros, x = observacoes)) +
+  geom_line(aes(x = observacoes, y = calculos$media), colour="yellow")+
+  ggtitle(paste("Média: ", calculos$media)) +
+  theme(plot.title = element_text(hjust = 0.5))
 
-# valor máximo
-ex1.maximo <- max(df.ex1$tx.juros)
-print(paste("Valor máximo das taxas de juros:", ex1.maximo))
+#Grafico mediana#
+ggplot(data = df.ex1) +
+  geom_col(aes(y = juros, x = observacoes)) +
+  geom_line(aes(x = observacoes, y = calculos$mediana), colour="red")+
+  ggtitle(paste("Mediana: ", calculos$mediana)) +
+  theme(plot.title = element_text(hjust = 0.5))
 
-# calculando os quartis
-ex1.quartis <- round(quantile(df.ex1$tx.juros),2)
-q1 <- ex1.quartis[2]
-print(paste("Q1:", q1))
+#Grafico desvio padrão#
+ggplot(data = df.ex1) +
+  geom_col(aes(y = juros, x = observacoes)) +
+  geom_errorbar(aes(x = observacoes, ymin = juros - calculos$desv_pad, ymax = juros ), width = .2, colour="green")+
+  ggtitle(paste("Desvio Padrão: ", calculos$desv_pad)) +
+  theme(plot.title = element_text(hjust = 0.5))
 
-q3 <- ex1.quartis[4]
-print(paste("Q3:", q3))
+#Grafico Variancia#
+ggplot(data = df.ex1) +
+  geom_col(aes(y = juros, x = observacoes)) +
+  geom_errorbar(aes(x = observacoes, ymin = juros - calculos$variancia, ymax = juros ), width = .2, colour="gold1")+
+  ggtitle(paste("Variância: ", calculos$variancia)) +
+  theme(plot.title = element_text(hjust = 0.5))
 
-# O melhor gráfico para representar os valores é o do "boxplot"!
-boxplot(df.ex1)
+#Grafico minimo#
+ggplot(data = df.ex1) +
+  geom_col(aes(y = juros, x = observacoes)) +
+  geom_line(aes(x = observacoes, y = calculos$minimo), colour="blue")+
+  ggtitle(paste("Mínimo: ", calculos$minimo)) +
+  theme(plot.title = element_text(hjust = 0.5))
 
-# Uma versão mais "sofisticada"!
-boxplot(df.ex1$tx.juros,
-        main = "Taxas de Juros Recebidas em Ações",
-        xlab = "Taxas de Juros",
-        ylab = "Ações",
-        col = "orange",
-        border = "brown",
-        horizontal = TRUE,
-        notch = T
-)
+#Grafico maximo#
+ggplot(data = df.ex1) +
+  geom_col(aes(y = juros, x = observacoes)) +
+  geom_line(aes(x = observacoes, y = calculos$maximo), colour="purple")+
+  ggtitle(paste("Máximo: ", calculos$maximo)) +
+  theme(plot.title = element_text(hjust = 0.5))
 
-# Uma versão dois, com retas indicando os pontos no gráfico
-# get quartile in r code (single line)
-media = round(mean(df.ex1$tx.juros),2)
-print(media)
-mediana = round(median(df.ex1$tx.juros),2)
-print(mediana)
-menorv = round(min(df.ex1$tx.juros),2)
-print(menorv)
-maiorv = round(max(df.ex1$tx.juros),2)
-print(maiorv)
+#Grafico q1#
+ggplot(data = df.ex1) +
+  geom_col(aes(y = juros, x = observacoes)) +
+  geom_line(aes(x = observacoes, y = calculos$q1), colour="yellow")+
+  ggtitle(paste("Quartil Q1: ", calculos$q1)) +
+  theme(plot.title = element_text(hjust = 0.5))
 
-quartiz = round(quantile(df.ex1$tx.juros, prob=c(.25,.5,.75)),2)
-quartiz
-# 25%  50%  75% 
-#2.59 2.61 2.63 
-
-round(summary(df.ex1$tx.juros),2)
-#Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
-#2.50    2.59    2.61    2.60    2.63    2.64 
-
-boxplot(df.ex1$tx.juros)
-
-abline(a = media, b = 0L, h = NULL, v = T)
-abline(a = mediana, b = 0L, h = NULL, v = T)
-abline(a = menorv, b = 0L, h = NULL, v = T)
-abline(a = maiorv, b = 0L, h = NULL, v = T)
-abline(a = quartiz[1], b = 0L, h = NULL, v = T)
-abline(a = quartiz[3], b = 0L, h = NULL, v = T)
-
-
-# Experiências ....
-
-#Outro gráfico
-plot(df.ex1$tx.juros, main = "Taxas de Juros Recebidas em Ações",
-     xlab = "Número da Ação",
-     ylab = "Taxa de Juros")
-barplot(table(df.ex1$tx.juros))
-
-plot(df.ex1$tx.juros)
-hist(df.ex1$tx.juros)
-lines(df.ex1$tx.juros)
-
-stripchart(df.ex1$tx.juros, vertical = T)
-
+#Grafico q3#
+ggplot(data = df.ex1) +
+  geom_col(aes(y = juros, x = observacoes)) +
+  geom_line(aes(x = observacoes, y = calculos$q3), colour="orange")+
+  ggtitle(paste("Quartil Q3: ", calculos$q3)) +
+  theme(plot.title = element_text(hjust = 0.5))
