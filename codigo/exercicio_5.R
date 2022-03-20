@@ -1,9 +1,9 @@
 ##Exercicio 5##
 
 # Instalando pacote #
-install.packages("readxl")
-install.packages("tidyverse")
-install.packages("bbl")
+#install.packages("readxl")
+#install.packages("tidyverse")
+#install.packages("bbl")
 
 # Carregando a biblioteca #
 library("tidyverse")
@@ -19,3 +19,4 @@ ggplot(data = df.ex5) +
   geom_col(aes(x = Marca, y = N_pessoas)) +
   ggtitle(paste("Antitérmico Preferido")) +
   theme(plot.title = element_text(hjust = 0.5))
+

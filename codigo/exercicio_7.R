@@ -1,8 +1,8 @@
 ###Exercicio 7###
 
 # Instalando pacote#
-install.packages("tidyverse")
-install.packages("ggQC")
+#install.packages("tidyverse")
+#install.packages("ggQC")
 
 library("ggQC")
 library("tidyverse")

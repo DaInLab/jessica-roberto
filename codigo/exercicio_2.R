@@ -21,7 +21,7 @@ df.ex2 <- read_excel("./dados/exercicio2.xls",skip = 1, col_names = "casas", col
 
 ## Visualizando os dados ##
 View(df.ex2)
-glimpse(dados)
+glimpse(df.ex2)
 
 ### Tabelas de Frequências ###
 
